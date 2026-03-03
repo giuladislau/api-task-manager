@@ -1,13 +1,53 @@
 # API Task Manager
 
-## O que é o projeto
-O **API Task Manager** é uma aplicação backend para gerenciar tarefas, fornecendo endpoints para criar, listar, atualizar e excluir tarefas.
+## Descrição do Projeto
+API RESTful para gerenciamento de tarefas desenvolvida com Node.js, Express e PostgreSQL. Ela fornece endpoints para criar, listar, atualizar e excluir tarefas.
 
-## Tecnologias
+
+## Tecnologias Utilizadas
 - **Node.js**
 - **Express.js**
 - **Docker**
 - **PostgreSQL**
+- **Nodemon**
+
+
+## Estrutura do Projeto
+
+```
+api-task-manager/
+├── docker-compose.yml
+├── package.json
+├── README.md
+├── src/
+│   ├── app.js
+│   ├── server.js
+│   ├── config/
+│   │   └── db.js
+│   ├── controllers/
+│   │   └── tasks.controller.js
+│   ├── middlewares/
+│   │   └── error.middleware.js
+│   ├── models/
+│   │   └── tasks.model.js
+│   └── routes/
+│       └── tasks.routes.js
+```
+
+## Variáveis de Ambiente
+O projeto utiliza um arquivo `.env` com as seguintes variáveis:
+
+```
+DB_HOST=<host do banco>
+DB_PORT=<porta do banco>
+DB_USER=<usuário do banco>
+DB_PASSWORD=<senha do banco>
+DB_NAME=<nome do banco>
+PORT=<porta da aplicação>
+```
+
+Certifique-se de criar o arquivo `.env` na raiz do projeto e preencher os valores adequados.
+
 
 ## Como rodar
 
@@ -34,19 +74,6 @@ O **API Task Manager** é uma aplicação backend para gerenciar tarefas, fornec
    ```
 5. Acesse a aplicação em `http://localhost:3000`.
 
-## Variáveis de Ambiente
-O projeto utiliza um arquivo `.env` com as seguintes variáveis:
-
-```
-DB_HOST=<host do banco>
-DB_PORT=<porta do banco>
-DB_USER=<usuário do banco>
-DB_PASSWORD=<senha do banco>
-DB_NAME=<nome do banco>
-PORT=<porta da aplicação>
-```
-
-Certifique-se de criar o arquivo `.env` na raiz do projeto e preencher os valores adequados.
 
 ## Endpoints
 
@@ -110,25 +137,3 @@ http://localhost:3000
 - **DELETE** `/tasks/:id`
 - **Resposta**:
   Sem conteúdo (status 204).
-
-## Estrutura do Projeto
-
-```
-api-task-manager/
-├── docker-compose.yml
-├── package.json
-├── README.md
-├── src/
-│   ├── app.js
-│   ├── server.js
-│   ├── config/
-│   │   └── db.js
-│   ├── controllers/
-│   │   └── tasks.controller.js
-│   ├── middlewares/
-│   │   └── error.middleware.js
-│   ├── models/
-│   │   └── tasks.model.js
-│   └── routes/
-│       └── tasks.routes.js
-```
