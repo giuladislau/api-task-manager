@@ -4,8 +4,11 @@
 function errorMiddleware(err, req, res, next) {
   console.error(err);
 
-  res.status(500).json({
-    erro: 'Erro interno do servidor.'
+  const statusCode = err.status || 500;
+  const message = err.message || 'Erro interno do servidor.';
+
+  return res.status(statusCode).json({
+    erro: statusCode === 500 ? 'Erro interno do servidor.' : message
   });
 }
 
