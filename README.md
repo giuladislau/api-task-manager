@@ -1,8 +1,7 @@
 # API Task Manager
 
 ## Descrição do Projeto
-API RESTful para gerenciamento de tarefas desenvolvida com Node.js, Express e PostgreSQL. Ela fornece endpoints para criar, listar, atualizar e excluir tarefas.
-
+API RESTful para gerenciamento de tarefas desenvolvida com Node.js, Express e PostgreSQL. Ela fornece endpoints para criar, listar, atualizar e excluir tarefas, além de buscar tarefas específicas por ID.
 
 ## Tecnologias Utilizadas
 - **Node.js**
@@ -10,7 +9,6 @@ API RESTful para gerenciamento de tarefas desenvolvida com Node.js, Express e Po
 - **Docker**
 - **PostgreSQL**
 - **Nodemon**
-
 
 ## Estrutura do Projeto
 
@@ -48,7 +46,6 @@ PORT=<porta da aplicação>
 
 Certifique-se de criar o arquivo `.env` na raiz do projeto e preencher os valores adequados.
 
-
 ## Como rodar
 
 ### Pré-requisitos
@@ -74,7 +71,6 @@ Certifique-se de criar o arquivo `.env` na raiz do projeto e preencher os valore
    ```
 5. Acesse a aplicação em `http://localhost:3000`.
 
-
 ## Endpoints
 
 ### Base URL
@@ -90,7 +86,8 @@ http://localhost:3000
   ```json
   {
     "titulo": "Título da tarefa",
-    "descricao": "Descrição da tarefa"
+    "descricao": "Descrição da tarefa",
+    "concluida": false
   }
   ```
 - **Resposta**:
@@ -98,7 +95,9 @@ http://localhost:3000
   {
     "id": 1,
     "titulo": "Título da tarefa",
-    "descricao": "Descrição da tarefa"
+    "descricao": "Descrição da tarefa",
+    "concluida": false,
+    "created_at": "2026-03-03T12:00:00.000Z"
   }
   ```
 
@@ -110,18 +109,34 @@ http://localhost:3000
     {
       "id": 1,
       "titulo": "Título da tarefa",
-      "descricao": "Descrição da tarefa"
+      "descricao": "Descrição da tarefa",
+      "concluida": false,
+      "created_at": "2026-03-03T12:00:00.000Z"
     }
   ]
   ```
 
-#### 3. **Atualizar Tarefa**
+#### 3. **Buscar Tarefa por ID**
+- **GET** `/tasks/:id`
+- **Resposta**:
+  ```json
+  {
+    "id": 1,
+    "titulo": "Título da tarefa",
+    "descricao": "Descrição da tarefa",
+    "concluida": false,
+    "created_at": "2026-03-03T12:00:00.000Z"
+  }
+  ```
+
+#### 4. **Atualizar Tarefa**
 - **PUT** `/tasks/:id`
 - **Body**:
   ```json
   {
     "titulo": "Novo título",
-    "descricao": "Nova descrição"
+    "descricao": "Nova descrição",
+    "concluida": true
   }
   ```
 - **Resposta**:
@@ -129,11 +144,45 @@ http://localhost:3000
   {
     "id": 1,
     "titulo": "Novo título",
-    "descricao": "Nova descrição"
+    "descricao": "Nova descrição",
+    "concluida": true,
+    "created_at": "2026-03-03T12:00:00.000Z"
   }
   ```
 
-#### 4. **Excluir Tarefa**
+#### 5. **Excluir Tarefa**
 - **DELETE** `/tasks/:id`
 - **Resposta**:
   Sem conteúdo (status 204).
+
+## Possíveis Respostas de Erro
+
+### 400 – Requisição Inválida
+- **ID inválido**:
+  ```json
+  {
+    "erro": "ID inválido."
+  }
+  ```
+- **Campo título obrigatório**:
+  ```json
+  {
+    "erro": "O campo titulo é obrigatório."
+  }
+  ```
+
+### 404 – Recurso Não Encontrado
+- **Tarefa não encontrada**:
+  ```json
+  {
+    "erro": "Tarefa não encontrada."
+  }
+  ```
+
+### 500 – Erro Interno do Servidor
+- **Erro inesperado**:
+  ```json
+  {
+    "erro": "Erro interno do servidor."
+  }
+  ```
