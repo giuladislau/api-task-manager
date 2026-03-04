@@ -1,12 +1,10 @@
 import pool from '../config/db.js';
 
-/**
- * Model responsável pelo acesso direto à tabela tasks.
- * Contém apenas operações relacionadas ao banco.
- */
 class TasksModel {
   static async findAll() {
-    const result = await pool.query('SELECT * FROM tasks ORDER BY id ASC');
+    const result = await pool.query(
+      'SELECT * FROM tasks ORDER BY id ASC'
+    );
     return result.rows;
   }
 
@@ -18,12 +16,12 @@ class TasksModel {
     return result.rows[0];
   }
 
-  static async create({ titulo, descricao }) {
+  static async create({ titulo, descricao, concluida = false }) {
     const result = await pool.query(
-      `INSERT INTO tasks (titulo, descricao)
-       VALUES ($1, $2)
+      `INSERT INTO tasks (titulo, descricao, concluida)
+       VALUES ($1, $2, $3)
        RETURNING *`,
-      [titulo, descricao]
+      [titulo, descricao, concluida]
     );
     return result.rows[0];
   }
@@ -38,11 +36,17 @@ class TasksModel {
        RETURNING *`,
       [titulo, descricao, concluida, id]
     );
+
     return result.rows[0];
   }
 
   static async delete(id) {
-    await pool.query('DELETE FROM tasks WHERE id = $1', [id]);
+    const result = await pool.query(
+      'DELETE FROM tasks WHERE id = $1 RETURNING *',
+      [id]
+    );
+
+    return result.rows[0];
   }
 }
 
